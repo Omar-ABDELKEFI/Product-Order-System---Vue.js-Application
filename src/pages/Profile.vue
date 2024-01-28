@@ -33,7 +33,7 @@
 </template>
 
 <script lang="ts">
-import {reactive, computed, watch} from 'vue';
+import {onMounted,reactive, computed, watch} from 'vue';
 import axios from 'axios';
 import {useStore} from "vuex";
 
@@ -59,7 +59,11 @@ export default {
       infoData.last_name = user.value.last_name;
       infoData.email = user.value.email;
     });
-
+    onMounted( () => {
+      infoData.first_name = user.value.first_name;
+      infoData.last_name = user.value.last_name;
+      infoData.email = user.value.email;
+    });
     const infoSubmit = async () => {
       const {data} = await axios.put('users/info', infoData);
 

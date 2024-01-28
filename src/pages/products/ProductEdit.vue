@@ -56,6 +56,7 @@ export default {
       await axios.put(`products/${route.params.id}`, data);
 
       await router.push('/products');
+      
     }
 
     return {

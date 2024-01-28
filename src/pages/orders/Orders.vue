@@ -23,7 +23,7 @@
           <td>{{ order.total }}</td>
           <td>
             <div :style="{ 'cursor': !hasPer ? 'not-allowed' : 'pointer' }" class="btn-group mr-2">
-              <a :class="{ 'disabled':! hasPer } href="javascript:void(0)" class="btn btn-sm btn-outline-secondary"
+              <a :class="{ 'disabled':! hasPer }" href="javascript:void(0)" class="btn btn-sm btn-outline-secondary"
                  @click="select(order.id)"
               >View</a>
             </div>

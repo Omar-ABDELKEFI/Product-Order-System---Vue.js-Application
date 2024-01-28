@@ -28,12 +28,14 @@ import {onMounted, reactive, ref} from 'vue';
 import axios from 'axios';
 import {useRoute, useRouter} from "vue-router";
 import {Permission} from "@/models/permission";
+import { useStore } from "vuex";
 
 export default {
   name: "RoleCreate",
   setup() {
     const {push} = useRouter();
     const {params} = useRoute();
+    const store = useStore();
 
     const formData = reactive({
       name: '',
@@ -63,8 +65,15 @@ export default {
 
     const submit = async () => {
       await axios.put(`roles/${params.id}`, formData);
-
+      try {
+        const {data} = await axios.get('user');
+         
+        await store.dispatch('User/setUser', data);
+      } catch (e) {
+        console.log(e,"err")
+      }
       await push('/roles');
+      
     }
 
     const checked = (id: number) => formData.permissions.some(p => p === id)

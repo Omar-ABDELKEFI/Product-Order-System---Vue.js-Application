@@ -1,6 +1,6 @@
 <template>
-  <div class="pt-3 pb-2 mb-3 border-bottom">
-    <router-link to="/products/create" class="btn btn-sm btn-outline-secondary">Add</router-link>
+  <div :style="{ 'cursor': !hasPer ? 'not-allowed' : 'pointer' }" class="pt-3 pb-2 mb-3 border-bottom">
+    <router-link :class="{ 'disabled': !hasPer }" to="/products/create" class="btn btn-sm btn-outline-secondary">Add</router-link>
   </div>
 
   <div class="table-responsive">
@@ -24,10 +24,10 @@
           <td>{{ product.price }}</td>
           <td>
             <div class="btn-group mr-2">
-              <div :style="{ 'cursor': !hasPer ? 'not-allowed' : 'pointer' }"><router-link
+              <div :style="{ 'cursor': !hasPer ? 'not-allowed' : 'pointer' }"><router-link  :class="{ 'disabled': !hasPer }"
                   :to="`/products/${product.id}/edit`" class="btn btn-sm btn-outline-secondary">Edit
                 </router-link></div>
-              <div :style="{ 'cursor': !hasPer ? 'not-allowed' : 'pointer' }"> <a href="javascript:void(0)"
+              <div :style="{ 'cursor': !hasPer ? 'not-allowed' : 'pointer' }"> <a  :class="{ 'disabled': !hasPer }" href="javascript:void(0)"
                   class="btn btn-sm btn-outline-secondary" @click="del(product.id)">Delete</a></div>
             </div>
           </td>
@@ -58,7 +58,7 @@ export default {
     const user = computed(() => store.state.User.user);
     watch(user, () => {
       hasPer.value = hasPermission(user.value?.role?.permissions, "edit_products")
-      console.log(hasPer, "hasPer")
+      console.log(hasPer.value, "hasPer")
     });
 
     onMounted(async () => {

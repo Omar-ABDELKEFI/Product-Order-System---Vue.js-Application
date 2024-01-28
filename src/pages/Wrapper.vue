@@ -1,9 +1,9 @@
 <template>
-  <Nav/>
+  <Nav v-if="user.id!==0" />
 
-  <div class="container-fluid">
+  <div  class="container-fluid">
     <div class="row">
-      <Menu/>
+      <Menu v-if="user.id!==0"/>
 
       <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
         <router-view/>
@@ -16,7 +16,7 @@
 import Nav from '@/components/Nav';
 import Menu from '@/components/Menu';
 import axios from "axios";
-import {onMounted} from 'vue';
+import {computed, onMounted} from 'vue';
 import {useRouter} from "vue-router";
 import {useStore} from "vuex";
 
@@ -29,6 +29,7 @@ export default {
   setup() {
     const router = useRouter();
     const store = useStore();
+    const user = computed(() => store.state.User.user);
 
     onMounted(async () => {
       try {
@@ -40,6 +41,10 @@ export default {
         await router.push('/login');
       }
     });
+
+    return {
+      user
+    }
   }
 }
 </script>

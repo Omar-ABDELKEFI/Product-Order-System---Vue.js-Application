@@ -1,6 +1,6 @@
 <template>
-  <div class="pt-3 pb-2 mb-3 border-bottom">
-    <router-link to="/users/create" class="btn btn-sm btn-outline-secondary">Add</router-link>
+  <div :style="{ 'cursor': !hasPer ? 'not-allowed' : 'pointer' }" class="pt-3 pb-2 mb-3 border-bottom">
+    <router-link :class="{ 'disabled': !hasPer }" to="/users/create" class="btn btn-sm btn-outline-secondary">Add</router-link>
   </div>
 
   <div class="table-responsive">
@@ -52,10 +52,9 @@ export default {
   setup() {
     const users = ref([]);
     const lastPage = ref(0);
-    const user = computed(() => store.state.User.user);
     const hasPer = ref(false);
     const store = useStore();
-    const router = useRouter();
+    const user = computed(() => store.state.User.user);
 
     const load = async (page = 1) => {
       const { data } = await axios.get(`users?page=${page}`);

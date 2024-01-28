@@ -1,17 +1,21 @@
-<template>
-  <h2>Daily Sales</h2>
+<template >
+  <h2 v-if="user.id!==0">Daily Sales</h2>
 
-  <div id="chart"></div>
+  <div v-if="user.id!==0" id="chart"></div>
 </template>
 
 <script lang="ts">
-import {onMounted} from 'vue';
+import {computed,onMounted} from 'vue';
 import axios from 'axios';
 import * as c3 from 'c3';
+import { useStore } from "vuex";
 
 export default {
   name: "Dashboard",
   setup() {
+    const store = useStore();
+    const user = computed(() => store.state.User.user);
+    console.log(user.value.id,"user")
     onMounted(async () => {
       const chart = c3.generate({
         bindto: '#chart',
@@ -44,6 +48,10 @@ export default {
         ]
       })
     });
+
+    return {
+      user
+    }
   }
 }
 </script>
